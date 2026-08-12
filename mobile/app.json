@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "GYM INFINIT",
+    "slug": "gym-infinit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "gyminfinit",
+    "splash": {
+      "backgroundColor": "#0B0F14",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "GYM INFINIT usa la cámara para escanear el código QR y marcar tu asistencia.",
+        "NSLocationWhenInUseUsageDescription": "GYM INFINIT usa tu ubicación para verificar que estás en el gimnasio al marcar asistencia."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0F14",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "GYM INFINIT usa la cámara para escanear el código QR y marcar tu asistencia."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "GYM INFINIT usa tu ubicación para verificar que estás en el gimnasio al marcar asistencia."
+        }
+      ]
+    ]
+  }
+}

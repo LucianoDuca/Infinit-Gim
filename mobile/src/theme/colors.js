@@ -1,0 +1,28 @@
+// Paleta de GYM INFINIT.
+// Fuente de verdad visual: assets/paleta/paleta.md
+// (colores provisorios hasta tener los de la marca real)
+
+export const colors = {
+  // Acción / marca
+  primary: '#22C55E',       // verde INFINIT — botón de asistencia, CTAs
+  primaryDark: '#15803D',   // verde profundo — estado presionado
+
+  // Fondos y superficies
+  background: '#0B0F14',     // negro carbón — fondo principal
+  surface: '#1A2028',        // gris grafito — tarjetas y paneles
+  surfaceAlt: '#232B36',     // superficie alternativa
+
+  // Texto
+  text: '#F5F7FA',           // blanco humo
+  textMuted: '#9AA5B1',      // gris claro — subtítulos
+
+  // Estados
+  error: '#EF4444',          // rojo — asistencia denegada
+  warning: '#F59E0B',        // ámbar — membresía por vencer
+  success: '#22C55E',        // = primary
+
+  // Bordes
+  border: '#2A333F',
+};
+
+export default colors;
