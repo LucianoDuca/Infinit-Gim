@@ -24,12 +24,24 @@ export function formatFecha(iso: string | null): string {
   return `${d}/${m}/${y}`;
 }
 
-// Días restantes hasta una fecha ISO (puede ser negativo si ya venció).
+// Días de cuota restantes. Los DOMINGOS no cuentan (el gimnasio cierra).
+// 0 = finaliza hoy · negativo = vencida (días de calendario pasados)
 export function diasRestantes(finISO: string | null): number | null {
   if (!finISO) return null;
   const [y, m, d] = finISO.split('-').map(Number);
   const fin = new Date(y, m - 1, d);
+  fin.setHours(0, 0, 0, 0);
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
-  return Math.ceil((fin.getTime() - hoy.getTime()) / 86400000);
+
+  const diffCal = Math.round((fin.getTime() - hoy.getTime()) / 86400000);
+  if (diffCal <= 0) return diffCal;
+
+  let count = 0;
+  const cur = new Date(hoy);
+  for (let i = 0; i < diffCal; i++) {
+    cur.setDate(cur.getDate() + 1);
+    if (cur.getDay() !== 0) count++; // 0 = domingo
+  }
+  return count;
 }
