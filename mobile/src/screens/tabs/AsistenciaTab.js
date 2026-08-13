@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
 import { colors } from '../../theme/colors';
@@ -62,9 +62,7 @@ export default function AsistenciaTab({ gymAbierto, diasCuota }) {
 
         {/* Logo con glow violeta */}
         <View style={styles.logoGlow}>
-          {/* 📸 Cuando subas el logo: <Image source={require('../../../assets/logos/logo.png')} style={styles.logoImg} /> */}
-          <Text style={styles.logoGym}>GYM</Text>
-          <Text style={styles.logoInfinit}>INFINIT</Text>
+          <Image source={require('../../../assets/logo.png')} style={styles.logoImg} />
         </View>
 
         {/* Leyenda */}
@@ -117,15 +115,13 @@ const styles = StyleSheet.create({
   scroll: { padding: 20, paddingBottom: 100, gap: 16 },
 
   logoGlow: {
-    alignItems: 'center', justifyContent: 'center', paddingVertical: 16,
+    alignSelf: 'center',
+    borderRadius: 18,
+    backgroundColor: '#000',
+    marginVertical: 8,
     shadowColor: colors.violet, shadowOpacity: 0.9, shadowRadius: 28, shadowOffset: { width: 0, height: 0 }, elevation: 16,
   },
-  logoImg: { width: 160, height: 160, resizeMode: 'contain' },
-  logoGym: { color: colors.text, fontSize: 40, fontWeight: '900', letterSpacing: 5 },
-  logoInfinit: {
-    color: colors.violet, fontSize: 40, fontWeight: '900', letterSpacing: 5, marginTop: -8,
-    textShadowColor: colors.violetGlow, textShadowRadius: 16,
-  },
+  logoImg: { width: 300, height: 150, resizeMode: 'contain', borderRadius: 18 },
 
   leyenda: { flexDirection: 'row', justifyContent: 'center', gap: 20 },
   leyItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
