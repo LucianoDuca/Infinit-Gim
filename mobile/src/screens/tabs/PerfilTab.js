@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View, Text, Pressable, StyleSheet, Image, Alert, ActivityIndicator, ScrollView,
 } from 'react-native';
@@ -14,6 +14,28 @@ export default function PerfilTab({ perfil, onChange, diasCuota }) {
   const { session } = useAuth();
   const userId = session?.user?.id;
   const [subiendo, setSubiendo] = useState(false);
+  const [total, setTotal] = useState(null);
+  const [historial, setHistorial] = useState([]);
+
+  useEffect(() => {
+    if (!userId) return;
+    (async () => {
+      const { count } = await supabase
+        .from('attendance')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .eq('resultado', 'permitido');
+      setTotal(count ?? 0);
+      const { data } = await supabase
+        .from('attendance')
+        .select('fecha_hora')
+        .eq('user_id', userId)
+        .eq('resultado', 'permitido')
+        .order('fecha_hora', { ascending: false })
+        .limit(15);
+      setHistorial(data || []);
+    })();
+  }, [userId]);
 
   const nombre = perfil?.nombre_completo || 'Socio';
   const inicial = nombre.trim().charAt(0).toUpperCase();
@@ -123,6 +145,28 @@ export default function PerfilTab({ perfil, onChange, diasCuota }) {
         <Dato label="Edad" valor={perfil?.edad ? String(perfil.edad) : null} />
       </View>
 
+      {/* Historial de asistencias */}
+      <View style={styles.card}>
+        <View style={styles.histHeader}>
+          <Text style={styles.cardTitulo}>Historial de asistencias</Text>
+          {total !== null && (
+            <Text style={styles.histTotal}>
+              {total} {total === 1 ? 'vez' : 'veces'}
+            </Text>
+          )}
+        </View>
+        {historial.length === 0 ? (
+          <Text style={styles.histVacio}>Todavía no marcaste ninguna asistencia.</Text>
+        ) : (
+          historial.map((a, i) => (
+            <View key={i} style={styles.histFila}>
+              <Ionicons name="checkmark-circle" size={16} color={colors.primary} />
+              <Text style={styles.histTexto}>{formatFechaHora(a.fecha_hora)}</Text>
+            </View>
+          ))
+        )}
+      </View>
+
       {/* Cerrar sesión */}
       <Pressable style={styles.logout} onPress={() => supabase.auth.signOut()}>
         <Ionicons name="log-out-outline" size={20} color={colors.error} />
@@ -130,6 +174,15 @@ export default function PerfilTab({ perfil, onChange, diasCuota }) {
       </Pressable>
     </ScrollView>
   );
+}
+
+function formatFechaHora(iso) {
+  const d = new Date(iso);
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  return `${dd}/${mm}/${d.getFullYear()}  ·  ${hh}:${mi} hs`;
 }
 
 function Dato({ label, valor }) {
@@ -167,6 +220,11 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: colors.border, marginTop: 8,
   },
   cardTitulo: { color: colors.text, fontSize: 16, fontWeight: '700', marginBottom: 4 },
+  histHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  histTotal: { color: colors.primary, fontSize: 16, fontWeight: '800' },
+  histVacio: { color: colors.textMuted, fontSize: 14 },
+  histFila: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 4 },
+  histTexto: { color: colors.text, fontSize: 14 },
   datoFila: { flexDirection: 'row', justifyContent: 'space-between' },
   datoLabel: { color: colors.textMuted, fontSize: 15 },
   datoValor: { color: colors.text, fontSize: 15, fontWeight: '600' },

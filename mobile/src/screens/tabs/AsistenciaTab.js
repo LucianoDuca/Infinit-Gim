@@ -1,13 +1,12 @@
-import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
+import { useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../theme/colors';
 import CuotaBanner from '../../components/CuotaBanner';
+import ScannerModal from '../../components/ScannerModal';
 
 export default function AsistenciaTab({ gymAbierto, diasCuota }) {
-  function marcar() {
-    // Fase 3: acá se abrirá el escáner de QR + GPS.
-    Alert.alert('Próximamente', 'Acá se abrirá la cámara para escanear el QR del gimnasio.');
-  }
+  const [scanner, setScanner] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -16,12 +15,14 @@ export default function AsistenciaTab({ gymAbierto, diasCuota }) {
       </View>
       <Pressable
         style={({ pressed }) => [styles.qrButton, pressed && styles.qrButtonPressed]}
-        onPress={marcar}
+        onPress={() => setScanner(true)}
       >
         <Ionicons name="qr-code-outline" size={64} color="#06210f" />
         <Text style={styles.qrText}>Marcar asistencia</Text>
       </Pressable>
       <Text style={styles.hint}>Escaneá el QR del gimnasio para registrar tu entrada</Text>
+
+      <ScannerModal visible={scanner} onClose={() => setScanner(false)} />
     </View>
   );
 }
