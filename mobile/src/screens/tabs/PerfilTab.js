@@ -8,8 +8,9 @@ import { decode } from 'base64-arraybuffer';
 import { colors } from '../../theme/colors';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
+import CuotaBanner from '../../components/CuotaBanner';
 
-export default function PerfilTab({ perfil, onChange }) {
+export default function PerfilTab({ perfil, onChange, diasCuota }) {
   const { session } = useAuth();
   const userId = session?.user?.id;
   const [subiendo, setSubiendo] = useState(false);
@@ -108,6 +109,11 @@ export default function PerfilTab({ perfil, onChange }) {
             <Text style={[styles.fotoBtnText, { color: colors.error }]}>Borrar foto</Text>
           </Pressable>
         ) : null}
+      </View>
+
+      {/* Cuota */}
+      <View style={{ width: '100%' }}>
+        <CuotaBanner dias={diasCuota} />
       </View>
 
       {/* Datos */}

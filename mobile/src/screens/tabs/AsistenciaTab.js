@@ -1,8 +1,9 @@
 import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../theme/colors';
+import CuotaBanner from '../../components/CuotaBanner';
 
-export default function AsistenciaTab({ gymAbierto }) {
+export default function AsistenciaTab({ gymAbierto, diasCuota }) {
   function marcar() {
     // Fase 3: acá se abrirá el escáner de QR + GPS.
     Alert.alert('Próximamente', 'Acá se abrirá la cámara para escanear el QR del gimnasio.');
@@ -10,6 +11,9 @@ export default function AsistenciaTab({ gymAbierto }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.bannerWrap}>
+        <CuotaBanner dias={diasCuota} />
+      </View>
       <Pressable
         style={({ pressed }) => [styles.qrButton, pressed && styles.qrButtonPressed]}
         onPress={marcar}
@@ -24,6 +28,7 @@ export default function AsistenciaTab({ gymAbierto }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 18, padding: 24 },
+  bannerWrap: { position: 'absolute', top: 16, left: 24, right: 24 },
   qrButton: {
     backgroundColor: colors.primary,
     width: 220,

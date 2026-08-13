@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, SafeAreaView, ActivityIndicator } fr
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { supabase } from '../lib/supabase';
+import { diasRestantes } from '../lib/fechas';
 import { useAuth } from '../context/AuthContext';
 import AsistenciaTab from './tabs/AsistenciaTab';
 import PerfilTab from './tabs/PerfilTab';
@@ -18,6 +19,7 @@ export default function HomeScreen() {
   const { session } = useAuth();
   const [perfil, setPerfil] = useState(null);
   const [gymAbierto, setGymAbierto] = useState(null);
+  const [cuotaFin, setCuotaFin] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [tab, setTab] = useState('asistencia');
 
@@ -36,14 +38,28 @@ export default function HomeScreen() {
     setGymAbierto(data ? data.gym_abierto : null);
   }, []);
 
+  const cargarCuota = useCallback(async () => {
+    if (!session?.user) return;
+    const { data } = await supabase
+      .from('memberships')
+      .select('vigente_hasta')
+      .eq('user_id', session.user.id)
+      .eq('activa', true)
+      .order('vigente_hasta', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    setCuotaFin(data?.vigente_hasta ?? null);
+  }, [session]);
+
   useEffect(() => {
     (async () => {
-      await Promise.all([cargarPerfil(), cargarGym()]);
+      await Promise.all([cargarPerfil(), cargarGym(), cargarCuota()]);
       setCargando(false);
     })();
-  }, [cargarPerfil, cargarGym]);
+  }, [cargarPerfil, cargarGym, cargarCuota]);
 
   const nombre = perfil?.nombre_completo || 'Socio';
+  const diasCuota = diasRestantes(cuotaFin);
 
   if (cargando) {
     return (
@@ -81,9 +97,9 @@ export default function HomeScreen() {
 
       {/* Contenido de la pestaña activa */}
       <View style={styles.content}>
-        {tab === 'asistencia' && <AsistenciaTab gymAbierto={gymAbierto} />}
-        {tab === 'perfil' && <PerfilTab perfil={perfil} onChange={cargarPerfil} />}
-        {tab === 'cuota' && <CuotaTab />}
+        {tab === 'asistencia' && <AsistenciaTab gymAbierto={gymAbierto} diasCuota={diasCuota} />}
+        {tab === 'perfil' && <PerfilTab perfil={perfil} onChange={cargarPerfil} diasCuota={diasCuota} />}
+        {tab === 'cuota' && <CuotaTab diasCuota={diasCuota} vigenteHasta={cuotaFin} />}
       </View>
 
       {/* Navbar inferior blanco con íconos verdes */}
