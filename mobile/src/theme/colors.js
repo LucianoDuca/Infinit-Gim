@@ -7,6 +7,14 @@ export const colors = {
   primary: '#22C55E',       // verde INFINIT — botón de asistencia, CTAs
   primaryDark: '#15803D',   // verde profundo — estado presionado
 
+  // Acento violeta (glow / detalles)
+  violet: '#910CEB',
+  violetGlow: 'rgba(145,12,235,0.55)',
+
+  // Blanco (tarjeta de inicio)
+  white: '#FFFFFF',
+  ink: '#0B0F14',           // texto oscuro sobre blanco
+
   // Fondos y superficies
   background: '#0B0F14',     // negro carbón — fondo principal
   surface: '#1A2028',        // gris grafito — tarjetas y paneles

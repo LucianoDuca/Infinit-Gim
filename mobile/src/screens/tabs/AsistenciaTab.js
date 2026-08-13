@@ -10,17 +10,28 @@ export default function AsistenciaTab({ gymAbierto, diasCuota }) {
 
   return (
     <View style={styles.container}>
+      {/* Cuota */}
       <View style={styles.bannerWrap}>
         <CuotaBanner dias={diasCuota} />
       </View>
+
+      {/* Logo en el centro (con glow violeta) */}
+      <View style={styles.center}>
+        <View style={styles.logoGlow}>
+          {/* 📸 Cuando subas el logo a assets, reemplazá este bloque por:
+              <Image source={require('../../../assets/logos/logo.png')} style={styles.logoImg} /> */}
+          <Text style={styles.logoGym}>GYM</Text>
+          <Text style={styles.logoInfinit}>INFINIT</Text>
+        </View>
+      </View>
+
+      {/* Botón flotante verde (estilo WhatsApp) */}
       <Pressable
-        style={({ pressed }) => [styles.qrButton, pressed && styles.qrButtonPressed]}
+        style={({ pressed }) => [styles.fab, pressed && styles.fabPressed]}
         onPress={() => setScanner(true)}
       >
-        <Ionicons name="qr-code-outline" size={64} color="#06210f" />
-        <Text style={styles.qrText}>Marcar asistencia</Text>
+        <Ionicons name="qr-code" size={30} color="#06210f" />
       </Pressable>
-      <Text style={styles.hint}>Escaneá el QR del gimnasio para registrar tu entrada</Text>
 
       <ScannerModal visible={scanner} onClose={() => setScanner(false)} />
     </View>
@@ -28,23 +39,45 @@ export default function AsistenciaTab({ gymAbierto, diasCuota }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 18, padding: 24 },
-  bannerWrap: { position: 'absolute', top: 16, left: 24, right: 24 },
-  qrButton: {
-    backgroundColor: colors.primary,
-    width: 220,
-    height: 220,
-    borderRadius: 28,
+  container: { flex: 1, padding: 20 },
+  bannerWrap: { marginBottom: 8 },
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+
+  logoGlow: {
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 12,
-    shadowColor: colors.primary,
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 8,
+    paddingVertical: 28,
+    paddingHorizontal: 40,
+    borderRadius: 28,
+    // glow violeta
+    shadowColor: colors.violet,
+    shadowOpacity: 0.9,
+    shadowRadius: 32,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 20,
   },
-  qrButtonPressed: { backgroundColor: colors.primaryDark, transform: [{ scale: 0.97 }] },
-  qrText: { color: '#06210f', fontSize: 18, fontWeight: '700' },
-  hint: { color: colors.textMuted, fontSize: 14, textAlign: 'center', maxWidth: 260 },
+  logoImg: { width: 200, height: 200, resizeMode: 'contain' },
+  logoGym: { color: colors.text, fontSize: 46, fontWeight: '900', letterSpacing: 6 },
+  logoInfinit: {
+    color: colors.violet, fontSize: 46, fontWeight: '900', letterSpacing: 6, marginTop: -10,
+    textShadowColor: colors.violetGlow, textShadowRadius: 18,
+  },
+
+  fab: {
+    position: 'absolute',
+    right: 22,
+    bottom: 22,
+    width: 66,
+    height: 66,
+    borderRadius: 33,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOpacity: 0.7,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 12,
+  },
+  fabPressed: { backgroundColor: colors.primaryDark, transform: [{ scale: 0.94 }] },
 });

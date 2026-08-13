@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { View, Text, Pressable, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, StyleSheet, SafeAreaView, ActivityIndicator, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { supabase } from '../lib/supabase';
@@ -59,7 +59,9 @@ export default function HomeScreen() {
   }, [cargarPerfil, cargarGym, cargarCuota]);
 
   const nombre = perfil?.nombre_completo || 'Socio';
+  const inicial = nombre.trim().charAt(0).toUpperCase();
   const diasCuota = diasRestantes(cuotaFin);
+  const estadoColor = gymAbierto == null ? '#9AA5B1' : gymAbierto ? colors.primary : colors.error;
 
   if (cargando) {
     return (
@@ -71,24 +73,23 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* Header: bienvenida + estado del gimnasio */}
-      <View style={styles.header}>
-        <Text style={styles.hola}>¡Hola, {nombre}! 👋</Text>
-        <View style={styles.estadoRow}>
-          <Text style={styles.estadoLabel}>Estado del gim: </Text>
+      {/* Header: tarjeta blanca con foto + bienvenida + estado */}
+      <View style={styles.headerWrap}>
+        <View style={styles.headerCard}>
+          <View style={styles.avatarMini}>
+            {perfil?.foto_url ? (
+              <Image source={{ uri: perfil.foto_url }} style={styles.avatarImg} />
+            ) : (
+              <Text style={styles.avatarInicial}>{inicial}</Text>
+            )}
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.holaLabel}>Hola,</Text>
+            <Text style={styles.holaNombre} numberOfLines={1}>{nombre}</Text>
+          </View>
           <View style={styles.estadoPill}>
-            <View
-              style={[
-                styles.dot,
-                { backgroundColor: gymAbierto == null ? colors.textMuted : gymAbierto ? colors.primary : colors.error },
-              ]}
-            />
-            <Text
-              style={[
-                styles.estadoValor,
-                { color: gymAbierto == null ? colors.textMuted : gymAbierto ? colors.primary : colors.error },
-              ]}
-            >
+            <View style={[styles.dot, { backgroundColor: estadoColor }]} />
+            <Text style={[styles.estadoValor, { color: estadoColor }]}>
               {gymAbierto == null ? '—' : gymAbierto ? 'Abierto' : 'Cerrado'}
             </Text>
           </View>
@@ -123,13 +124,27 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   centro: { justifyContent: 'center', alignItems: 'center' },
-  header: { paddingHorizontal: 24, paddingTop: 16, paddingBottom: 12 },
-  hola: { color: colors.text, fontSize: 24, fontWeight: '800' },
-  estadoRow: { flexDirection: 'row', alignItems: 'center', marginTop: 6 },
-  estadoLabel: { color: colors.textMuted, fontSize: 15 },
-  estadoPill: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  dot: { width: 9, height: 9, borderRadius: 5 },
-  estadoValor: { fontSize: 15, fontWeight: '700' },
+  headerWrap: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },
+  headerCard: {
+    flexDirection: 'row', alignItems: 'center', gap: 12,
+    backgroundColor: colors.white, borderRadius: 20, padding: 12, paddingRight: 14,
+    shadowColor: colors.violet, shadowOpacity: 0.6, shadowRadius: 16, shadowOffset: { width: 0, height: 4 },
+    elevation: 12,
+  },
+  avatarMini: {
+    width: 52, height: 52, borderRadius: 26, backgroundColor: colors.violet,
+    alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+  },
+  avatarImg: { width: 52, height: 52, borderRadius: 26 },
+  avatarInicial: { color: '#fff', fontSize: 22, fontWeight: '800' },
+  holaLabel: { color: '#6B7280', fontSize: 13 },
+  holaNombre: { color: colors.ink, fontSize: 20, fontWeight: '800' },
+  estadoPill: {
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    backgroundColor: '#F3F4F6', borderRadius: 20, paddingHorizontal: 10, paddingVertical: 6,
+  },
+  dot: { width: 8, height: 8, borderRadius: 4 },
+  estadoValor: { fontSize: 13, fontWeight: '700' },
   content: { flex: 1 },
   navbar: {
     flexDirection: 'row',
