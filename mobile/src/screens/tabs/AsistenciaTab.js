@@ -60,8 +60,8 @@ export default function AsistenciaTab({ gymAbierto, diasCuota }) {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <CuotaBanner dias={diasCuota} />
 
-        {/* Logo con glow violeta */}
-        <View style={styles.logoGlow}>
+        {/* Logo (transparente, se camufla con el fondo) */}
+        <View style={styles.logoWrap}>
           <Image source={require('../../../assets/logo.png')} style={styles.logoImg} />
         </View>
 
@@ -114,14 +114,8 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { padding: 20, paddingBottom: 100, gap: 16 },
 
-  logoGlow: {
-    alignSelf: 'center',
-    borderRadius: 18,
-    backgroundColor: '#000',
-    marginVertical: 8,
-    shadowColor: colors.violet, shadowOpacity: 0.9, shadowRadius: 28, shadowOffset: { width: 0, height: 0 }, elevation: 16,
-  },
-  logoImg: { width: 300, height: 150, resizeMode: 'contain', borderRadius: 18 },
+  logoWrap: { alignSelf: 'center', marginVertical: 4 },
+  logoImg: { width: 340, height: 170, resizeMode: 'contain' },
 
   leyenda: { flexDirection: 'row', justifyContent: 'center', gap: 20 },
   leyItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },

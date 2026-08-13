@@ -18,7 +18,10 @@ export default function ScannerModal({ visible, onClose, onRegistrado }) {
       const { data: res, error } = await supabase.rpc('registrar_asistencia', { p_token: data });
       if (error) throw error;
       const ok = res?.ok;
-      Alert.alert(ok ? '✅ Listo' : '❌ No se pudo', res?.mensaje ?? 'Sin respuesta.', [
+      const mensaje = (res?.mensaje ?? 'Sin respuesta.')
+        .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu, '')
+        .trim();
+      Alert.alert(ok ? 'Listo' : 'No se pudo', mensaje, [
         {
           text: 'OK',
           onPress: () => {

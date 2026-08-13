@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   navItem: { flex: 1, alignItems: 'center', gap: 3 },
   navIcon: { padding: 4, borderRadius: 12 },
-  navIconActivo: { backgroundColor: 'rgba(34,197,94,0.14)' },
+  navIconActivo: { backgroundColor: 'rgba(94,249,35,0.14)' },
   navLabel: { color: '#6B7280', fontSize: 11, fontWeight: '500' },
   navLabelActivo: { color: colors.primaryDark, fontWeight: '700' },
 });

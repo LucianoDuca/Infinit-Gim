@@ -29,7 +29,7 @@ export default function CuotaTab({ diasCuota, vigenteHasta }) {
       setNotif(false);
       if (res.motivo) Alert.alert('No se pudo activar', res.motivo);
     } else if (valor) {
-      Alert.alert('Listo', 'Te vamos a avisar un día antes de que termine tu cuota. 🔔');
+      Alert.alert('Listo', 'Te vamos a avisar un día antes de que termine tu cuota.');
     }
     setGuardando(false);
   }

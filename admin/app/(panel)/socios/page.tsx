@@ -213,7 +213,7 @@ function RenovarCuotaModal({
             <h2 className="text-xl font-bold">Renovar cuota</h2>
             <p className="text-muted text-sm">{socio.nombre_completo}</p>
           </div>
-          <button onClick={onClose} className="text-muted hover:text-foreground text-xl leading-none">✕</button>
+          <button onClick={onClose} className="text-muted hover:text-foreground text-2xl leading-none">×</button>
         </div>
 
         {/* Botones rápidos */}
@@ -319,7 +319,7 @@ function NuevoSocioModal({ onClose, onCreado }: { onClose: () => void; onCreado:
       >
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Nuevo socio</h2>
-          <button type="button" onClick={onClose} className="text-muted hover:text-foreground text-xl leading-none">✕</button>
+          <button type="button" onClick={onClose} className="text-muted hover:text-foreground text-2xl leading-none">×</button>
         </div>
 
         <label className="flex flex-col gap-1">

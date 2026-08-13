@@ -38,13 +38,13 @@ begin
     and (fecha_hora at time zone v_tz)::date = (now() at time zone v_tz)::date;
 
   if v_ya > 0 then
-    return jsonb_build_object('ok', true, 'mensaje', 'Ya registraste tu asistencia hoy. ¡Buen entrenamiento! 💪');
+    return jsonb_build_object('ok', true, 'mensaje', 'Ya registraste tu asistencia hoy. ¡Buen entrenamiento!');
   end if;
 
   insert into public.attendance (user_id, resultado, fecha_hora)
   values (auth.uid(), 'permitido', now());
 
-  return jsonb_build_object('ok', true, 'mensaje', '¡Asistencia registrada! 🟢');
+  return jsonb_build_object('ok', true, 'mensaje', '¡Asistencia registrada!');
 end;
 $$;
 

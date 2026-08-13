@@ -86,7 +86,7 @@ export default function EditarSocioPage() {
         if (e3) throw e3;
         if (data) setMembershipId(data.id);
       }
-      setMsg('Cambios guardados ✅');
+      setMsg('Cambios guardados');
     } catch (err) {
       setMsg(err instanceof Error ? err.message : 'Error al guardar.');
     } finally {
@@ -139,7 +139,7 @@ export default function EditarSocioPage() {
           </div>
         </div>
 
-        {msg && <p className={msg.includes('✅') ? 'text-primary text-sm' : 'text-error text-sm'}>{msg}</p>}
+        {msg && <p className={msg === 'Cambios guardados' ? 'text-primary text-sm' : 'text-error text-sm'}>{msg}</p>}
 
         <button onClick={guardar} disabled={guardando}
           className="bg-primary text-[#06210f] font-bold rounded-lg py-2.5 hover:bg-primary-dark transition disabled:opacity-60 mt-2">

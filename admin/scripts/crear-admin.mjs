@@ -19,7 +19,7 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const secret = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!url || !secret) {
-  console.error('❌ Falta NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en .env.local');
+  console.error('Falta NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en .env.local');
   process.exit(1);
 }
 
@@ -32,7 +32,7 @@ const { data, error } = await admin.auth.admin.createUser({
 });
 
 if (error) {
-  console.error('❌ Error creando el usuario:', error.message);
+  console.error('Error creando el usuario:', error.message);
   process.exit(1);
 }
 
@@ -41,9 +41,9 @@ const { error: perfilError } = await admin
   .upsert({ id: data.user.id, rol: 'admin', nombre_completo: 'Administrador' });
 
 if (perfilError) {
-  console.error('❌ Usuario creado pero falló el perfil:', perfilError.message);
+  console.error('Usuario creado pero falló el perfil:', perfilError.message);
   process.exit(1);
 }
 
-console.log('✅ Administrador creado con éxito:', email);
+console.log('Administrador creado con éxito:', email);
 console.log('   Ya podés entrar al panel con ese email y contraseña.');

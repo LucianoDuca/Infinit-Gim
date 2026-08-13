@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { supabaseBrowser } from '@/lib/supabaseBrowser';
 
 const NAV = [
-  { href: '/socios', label: 'Socios', icon: '👥' },
-  { href: '/asistencias', label: 'Asistencias', icon: '📋' },
+  { href: '/socios', label: 'Socios' },
+  { href: '/asistencias', label: 'Asistencias' },
 ];
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
@@ -79,11 +79,10 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg transition ${
+                className={`flex items-center px-3 py-2 rounded-lg transition ${
                   activo ? 'bg-primary text-[#06210f] font-semibold' : 'text-muted hover:bg-surface-2'
                 }`}
               >
-                <span>{item.icon}</span>
                 {item.label}
               </Link>
             );

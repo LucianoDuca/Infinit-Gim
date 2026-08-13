@@ -49,7 +49,7 @@ export async function setPrefNotif(activar, vigenteHasta) {
   const id = await Notifications.scheduleNotificationAsync({
     content: {
       title: 'GYM INFINIT',
-      body: 'Tu cuota termina mañana. ¡No te olvides de renovarla! 💪',
+      body: 'Tu cuota termina mañana. ¡No te olvides de renovarla!',
     },
     trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: fecha },
   });

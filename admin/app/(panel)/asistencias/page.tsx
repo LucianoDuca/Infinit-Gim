@@ -67,7 +67,7 @@ export default function AsistenciasPage() {
               onClick={() => window.print()}
               className="border border-border rounded-lg px-4 py-2 text-sm hover:border-primary hover:text-primary transition"
             >
-              🖨️ Imprimir
+Imprimir
             </button>
           </div>
         </div>
