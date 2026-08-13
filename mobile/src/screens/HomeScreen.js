@@ -87,11 +87,14 @@ export default function HomeScreen() {
             <Text style={styles.holaLabel}>Hola,</Text>
             <Text style={styles.holaNombre} numberOfLines={1}>{nombre}</Text>
           </View>
-          <View style={styles.estadoPill}>
-            <View style={[styles.dot, { backgroundColor: estadoColor }]} />
-            <Text style={[styles.estadoValor, { color: estadoColor }]}>
-              {gymAbierto == null ? '—' : gymAbierto ? 'Abierto' : 'Cerrado'}
-            </Text>
+          <View style={styles.estadoBox}>
+            <Text style={styles.estadoTitulo}>Estado del gim:</Text>
+            <View style={styles.estadoPill}>
+              <View style={[styles.dot, { backgroundColor: estadoColor }]} />
+              <Text style={[styles.estadoValor, { color: estadoColor }]}>
+                {gymAbierto == null ? '—' : gymAbierto ? 'Abierto' : 'Cerrado'}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -139,6 +142,8 @@ const styles = StyleSheet.create({
   avatarInicial: { color: '#fff', fontSize: 22, fontWeight: '800' },
   holaLabel: { color: '#6B7280', fontSize: 13 },
   holaNombre: { color: colors.ink, fontSize: 20, fontWeight: '800' },
+  estadoBox: { alignItems: 'flex-end', gap: 4 },
+  estadoTitulo: { color: '#6B7280', fontSize: 11, fontWeight: '600' },
   estadoPill: {
     flexDirection: 'row', alignItems: 'center', gap: 6,
     backgroundColor: '#F3F4F6', borderRadius: 20, paddingHorizontal: 10, paddingVertical: 6,
